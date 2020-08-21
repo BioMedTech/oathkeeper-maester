@@ -7,7 +7,7 @@ import (
 	"os"
 
 	"github.com/avast/retry-go"
-	oathkeeperv1alpha1 "github.com/biomedtech/oathkeeper-maester/api/v1alpha1"
+	oathkeeperv1alpha1 "github.com/biomedtech/oathkeeper-maester/api/rules/v1alpha1"
 	"github.com/go-logr/logr"
 	apiv1 "k8s.io/api/core/v1"
 	apierrs "k8s.io/apimachinery/pkg/api/errors"

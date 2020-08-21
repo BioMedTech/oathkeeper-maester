@@ -16,6 +16,10 @@ limitations under the License.
 // Package v1alpha1 contains API Schema definitions for the oathkeeper v1alpha1 API group
 // +kubebuilder:object:generate=true
 // +groupName=oathkeeper.ory.sh
+
+// +k8s:deepcopy-gen=package
+// +k8s:defaulter-gen=TypeMeta
+
 package v1alpha1
 
 import (

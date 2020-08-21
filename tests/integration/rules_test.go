@@ -8,7 +8,7 @@ import (
 
 	"k8s.io/client-go/rest"
 
-	oathkeeperv1alpha1 "github.com/biomedtech/oathkeeper-maester/api/v1alpha1"
+	oathkeeperv1alpha1 "github.com/biomedtech/oathkeeper-maester/api/rules/v1alpha1"
 	json "github.com/bitly/go-simplejson"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"

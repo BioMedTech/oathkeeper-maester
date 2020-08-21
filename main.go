@@ -24,7 +24,7 @@ import (
 
 	"github.com/biomedtech/oathkeeper-maester/internal/validation"
 
-	oathkeeperv1alpha1 "github.com/biomedtech/oathkeeper-maester/api/v1alpha1"
+	oathkeeperv1alpha1 "github.com/biomedtech/oathkeeper-maester/api/rules/v1alpha1"
 	"github.com/biomedtech/oathkeeper-maester/controllers"
 	apiv1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/runtime"

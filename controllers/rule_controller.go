@@ -22,7 +22,7 @@ import (
 	"strings"
 	"time"
 
-	oathkeeperv1alpha1 "github.com/biomedtech/oathkeeper-maester/api/v1alpha1"
+	oathkeeperv1alpha1 "github.com/biomedtech/oathkeeper-maester/api/rules/v1alpha1"
 	"github.com/biomedtech/oathkeeper-maester/internal/validation"
 	"github.com/go-logr/logr"
 
