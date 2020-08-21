@@ -3,14 +3,15 @@ package integration
 import (
 	"errors"
 	"fmt"
-	"k8s.io/client-go/rest"
 	"os"
 	"time"
 
+	"k8s.io/client-go/rest"
+
+	oathkeeperv1alpha1 "github.com/biomedtech/oathkeeper-maester/api/v1alpha1"
 	json "github.com/bitly/go-simplejson"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	oathkeeperv1alpha1 "github.com/ory/oathkeeper-maester/api/v1alpha1"
 	"k8s.io/api/core/v1"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"

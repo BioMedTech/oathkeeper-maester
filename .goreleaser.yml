@@ -30,11 +30,11 @@ changelog:
 
 dockers:
   - image_templates:
-      - "oryd/oathkeeper-maester:v{{ .Major }}"
-      - "oryd/oathkeeper-maester:v{{ .Major }}.{{ .Minor }}"
-      - "oryd/oathkeeper-maester:v{{ .Major }}.{{ .Minor }}.{{ .Patch }}"
-      - "oryd/oathkeeper-maester:{{ .Env.DOCKER_SHORT_TAG }}"
-      - "oryd/oathkeeper-maester:latest"
+      - "mozguana/oathkeeper-maester:v{{ .Major }}"
+      - "mozguana/oathkeeper-maester:v{{ .Major }}.{{ .Minor }}"
+      - "mozguana/oathkeeper-maester:v{{ .Major }}.{{ .Minor }}.{{ .Patch }}"
+      - "mozguana/oathkeeper-maester:{{ .Env.DOCKER_SHORT_TAG }}"
+      - "mozguana/oathkeeper-maester:latest"
 
 release:
   prerelease: auto

@@ -21,7 +21,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 
-	"github.com/ory/oathkeeper-maester/internal/validation"
+	"github.com/biomedtech/oathkeeper-maester/internal/validation"
 )
 
 const (
@@ -37,6 +37,7 @@ var (
 	preserveHostDefault = false
 )
 
+// +genclient
 // +kubebuilder:object:root=true
 // Rule is the Schema for the rules API
 type Rule struct {
@@ -55,6 +56,11 @@ type RuleList struct {
 	Items           []Rule `json:"items"`
 }
 
+// Error respresents a handler that is activated when errors occure
+type OathError struct {
+	*Handler `json:",inline"`
+}
+
 // RuleSpec defines the desired state of Rule
 type RuleSpec struct {
 	Upstream       *Upstream        `json:"upstream"`
@@ -62,6 +68,8 @@ type RuleSpec struct {
 	Authenticators []*Authenticator `json:"authenticators,omitempty"`
 	Authorizer     *Authorizer      `json:"authorizer,omitempty"`
 	Mutators       []*Mutator       `json:"mutators,omitempty"`
+	// +optional
+	Errors []*OathError `json:"errors,omitempty"`
 	// +kubebuilder:validation:MinLength=1
 	// +kubebuilder:validation:MaxLength=253
 	// +kubebuilder:validation:Pattern=[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*
@@ -209,6 +217,14 @@ func (r Rule) ValidateWith(config validation.Config) error {
 		for _, m := range r.Spec.Mutators {
 			if valid := config.IsMutatorValid(m.Name); !valid {
 				invalidHandlers = append(invalidHandlers, m.Name)
+			}
+		}
+	}
+
+	if r.Spec.Errors != nil {
+		for _, e := range r.Spec.Errors {
+			if valid := config.IsErrorValid(e.Name); !valid {
+				invalidHandlers = append(invalidHandlers, e.Name)
 			}
 		}
 	}

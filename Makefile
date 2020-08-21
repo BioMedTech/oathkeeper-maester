@@ -71,6 +71,7 @@ vet:
 generate: controller-gen
 	$(CONTROLLER_GEN) object:headerFile=./hack/boilerplate.go.txt paths=./api/...
 
+
 # Build the docker image
 docker-build-notest: manager 
 	docker build . -t ${IMG}
@@ -82,6 +83,9 @@ docker-build: test docker-build-notest
 # Push the docker image
 docker-push:
 	docker push ${IMG}
+
+client-generate:
+    ./generate-client.sh
 
 # find or download controller-gen
 # download controller-gen if necessary

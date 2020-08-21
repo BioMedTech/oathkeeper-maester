@@ -17,12 +17,13 @@ package v1alpha1
 
 import (
 	"fmt"
-	"github.com/ory/oathkeeper-maester/internal/validation"
+	"testing"
+
+	"github.com/biomedtech/oathkeeper-maester/internal/validation"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
-	"testing"
 )
 
 var (
@@ -109,6 +110,14 @@ var (
       {
         "handler": "noop"
       }
+    ],
+    "errors": [
+      {
+        "handler": "handler1",
+        "config": {
+          "key1": "val1"
+        }
+      }
     ]
   },
   {
@@ -193,7 +202,9 @@ func TestToOathkeeperRules(t *testing.T) {
 				newBoolPtr(true),
 				[]*Authenticator{{h1}},
 				nil,
-				[]*Mutator{{h1}, {h2}})
+				[]*Mutator{{h1}, {h2}},
+				nil,
+			)
 
 			rule2 := newRule(
 				"foo2",
@@ -205,7 +216,9 @@ func TestToOathkeeperRules(t *testing.T) {
 				newBoolPtr(false),
 				[]*Authenticator{{h1}, {h2}},
 				nil,
-				nil)
+				nil,
+				[]*OathError{{h1}},
+			)
 
 			rule3 := newRule(
 				"foo3",
@@ -217,7 +230,9 @@ func TestToOathkeeperRules(t *testing.T) {
 				nil,
 				nil,
 				&Authorizer{h1},
-				nil)
+				nil,
+				nil,
+			)
 
 			list.Items = []Rule{*rule1, *rule2, *rule3}
 
@@ -320,7 +335,9 @@ func TestValidateWith(t *testing.T) {
 		newBoolPtr(true),
 		nil,
 		nil,
-		nil)
+		nil,
+		nil,
+	)
 
 	var validationConfig = validation.Config{
 		AuthenticatorsAvailable: []string{testHandler.Name},
@@ -394,10 +411,10 @@ func TestFilterNotValid(t *testing.T) {
 }
 
 func newStaticRule(authenticators []*Authenticator, authorizer *Authorizer, mutators []*Mutator) *Rule {
-	return newRule("r1", "test", "", "", newStringPtr(""), nil, newBoolPtr(false), authenticators, authorizer, mutators)
+	return newRule("r1", "test", "", "", newStringPtr(""), nil, newBoolPtr(false), authenticators, authorizer, mutators, nil)
 }
 
-func newRule(name, namespace, upstreamURL, matchURL string, stripURLPath, configMapName *string, preserveURLHost *bool, authenticators []*Authenticator, authorizer *Authorizer, mutators []*Mutator) *Rule {
+func newRule(name, namespace, upstreamURL, matchURL string, stripURLPath, configMapName *string, preserveURLHost *bool, authenticators []*Authenticator, authorizer *Authorizer, mutators []*Mutator, errors []*OathError) *Rule {
 
 	spec := RuleSpec{
 		Upstream: &Upstream{
@@ -413,6 +430,7 @@ func newRule(name, namespace, upstreamURL, matchURL string, stripURLPath, config
 		Authorizer:     authorizer,
 		Mutators:       mutators,
 		ConfigMapName:  configMapName,
+		Errors:         errors,
 	}
 
 	return &Rule{

@@ -22,9 +22,9 @@ import (
 	"strings"
 	"time"
 
+	oathkeeperv1alpha1 "github.com/biomedtech/oathkeeper-maester/api/v1alpha1"
+	"github.com/biomedtech/oathkeeper-maester/internal/validation"
 	"github.com/go-logr/logr"
-	oathkeeperv1alpha1 "github.com/ory/oathkeeper-maester/api/v1alpha1"
-	"github.com/ory/oathkeeper-maester/internal/validation"
 
 	"github.com/avast/retry-go"
 	apierrs "k8s.io/apimachinery/pkg/api/errors"

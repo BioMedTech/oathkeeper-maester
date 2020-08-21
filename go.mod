@@ -1,4 +1,4 @@
-module github.com/ory/oathkeeper-maester
+module github.com/biomedtech/oathkeeper-maester
 
 go 1.12
 
@@ -13,6 +13,8 @@ require (
 	k8s.io/api v0.17.8
 	k8s.io/apimachinery v0.17.8
 	k8s.io/client-go v0.17.8
+	k8s.io/code-generator v0.18.8 // indirect
 	sigs.k8s.io/controller-runtime v0.5.8
+	sigs.k8s.io/controller-tools v0.2.9 // indirect
 	sigs.k8s.io/kind v0.7.0 // indirect
 )

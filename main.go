@@ -22,10 +22,10 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/ory/oathkeeper-maester/internal/validation"
+	"github.com/biomedtech/oathkeeper-maester/internal/validation"
 
-	oathkeeperv1alpha1 "github.com/ory/oathkeeper-maester/api/v1alpha1"
-	"github.com/ory/oathkeeper-maester/controllers"
+	oathkeeperv1alpha1 "github.com/biomedtech/oathkeeper-maester/api/v1alpha1"
+	"github.com/biomedtech/oathkeeper-maester/controllers"
 	apiv1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/types"
@@ -41,12 +41,14 @@ var (
 	defaultAuthenticatorsAvailable = [...]string{"noop", "unauthorized", "anonymous", "cookie_session", "oauth2_client_credentials", "oauth2_introspection", "jwt"}
 	defaultAuthorizersAvailable    = [...]string{"allow", "deny", "keto_engine_acp_ory"}
 	defaultMutatorsAvailable       = [...]string{"noop", "id_token", "header", "cookie", "hydrator"}
+	defaultErrorsAvailable         = [...]string{"redirect", "json"}
 )
 
 const (
 	authenticatorsAvailableEnv = "authenticatorsAvailable"
 	authorizersAvailableEnv    = "authorizersAvailable"
 	mutatorsAvailableEnv       = "mutatorsAvailable"
+	errorsAvailableEnv         = "errorsAvailable"
 	rulesFileNameRegexp        = "\\A[-._a-zA-Z0-9]+\\z"
 )
 
@@ -172,10 +174,12 @@ func initValidationConfig() validation.Config {
 	authenticatorsAvailable := os.Getenv(authenticatorsAvailableEnv)
 	authorizersAvailable := os.Getenv(authorizersAvailableEnv)
 	mutatorsAvailable := os.Getenv(mutatorsAvailableEnv)
+	errorsAvailable := os.Getenv(errorsAvailableEnv)
 	return validation.Config{
 		AuthenticatorsAvailable: parseListOrDefault(authenticatorsAvailable, defaultAuthenticatorsAvailable[:], authenticatorsAvailableEnv),
 		AuthorizersAvailable:    parseListOrDefault(authorizersAvailable, defaultAuthorizersAvailable[:], authorizersAvailableEnv),
 		MutatorsAvailable:       parseListOrDefault(mutatorsAvailable, defaultMutatorsAvailable[:], mutatorsAvailableEnv),
+		ErrorsAvailable:         parseListOrDefault(errorsAvailable, defaultErrorsAvailable[:], errorsAvailableEnv),
 	}
 }
 
