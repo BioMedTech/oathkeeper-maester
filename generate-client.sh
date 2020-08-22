@@ -4,10 +4,10 @@ CURRENT_DIR=$(pwd)
 GEN_DIR=$(dirname $0)
 REPO_DIR="$CURRENT_DIR/$GEN_DIR/../.."
 
-PROJECT_MODULE="github.com/biomedtech/oathkeeper-maester"
+PROJECT_MODULE="biomedtech/oathkeeper-maester"
 IMAGE_NAME="kubernetes-codegen:latest"
 
-CUSTOM_RESOURCE_NAME="rule"
+CUSTOM_RESOURCE_NAME="rules"
 CUSTOM_RESOURCE_VERSION="v1alpha1"
 
 echo "Building codegen Docker image..."
@@ -15,7 +15,7 @@ docker build -f "${GEN_DIR}/gen.Dockerfile" \
              -t "${IMAGE_NAME}" \
              "${REPO_DIR}"
 
-cmd="./generate-groups.sh all \
+cmd="./generate-groups.sh client \
     "$PROJECT_MODULE/pkg/client" \
     "$PROJECT_MODULE/api" \
     $CUSTOM_RESOURCE_NAME:$CUSTOM_RESOURCE_VERSION"

@@ -84,8 +84,9 @@ docker-build: test docker-build-notest
 docker-push:
 	docker push ${IMG}
 
+
 client-generate:
-    ./generate-client.sh
+	./generate-client.sh
 
 # find or download controller-gen
 # download controller-gen if necessary
